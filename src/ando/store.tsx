@@ -5,82 +5,22 @@ import * as React from "react"
 /*  State lives in memory only (no localStorage), per the brief.       */
 /* ------------------------------------------------------------------ */
 
-export type ScreenKey =
-  | "p1"
-  | "p2"
-  | "p3"
-  | "p3b"
-  | "p4"
-  | "p5"
-  | "p6"
-  | "p7"
-  | "p8"
-  | "p9"
-  | "p10"
-  | "p11"
-  | "p12"
-  | "p13"
-  | "p14"
-  | "p15"
-  | "p16"
+export type ScreenKey = "p1" | "p3" | "p3b"
 
 /** Linear happy-path order, driven by the primary CTAs. */
-export const FLOW: ScreenKey[] = [
-  "p1",
-  "p2",
-  "p3",
-  "p3b",
-  "p4",
-  "p5",
-  "p6",
-  "p7",
-  "p8",
-  "p9",
-  "p10",
-  "p11",
-  "p12",
-  "p13",
-  "p14",
-  "p15",
-  "p16",
-]
-
-export type Goal = {
-  /** Chip label shown on the landing. */
-  label: string
-  /** Short noun used in goal-anchored copy ("tu laptop"). */
-  noun: string
-}
+export const FLOW: ScreenKey[] = ["p1", "p3", "p3b"]
 
 export type DemoState = {
   screen: ScreenKey
-  goal: Goal
   goalAmount: number
-  /** Current credit line plan (S/). 500 by default, 2000 after upgrade. */
+  /** Current credit line plan (S/). Fallback shown before a goal is set. */
   plan: number
-  /** Monthly saving for the current plan (S/). */
-  monthlySaving: number
-  /** Money the user has put into Warda (S/). */
-  warda: number
-  /** Money usable today — the user's own money (S/). */
-  available: number
-  /** TarjetaANDO fill, 0–100. */
-  cardProgress: number
-  month: number
-  remindersOn: boolean
 }
 
 const CAMILA: DemoState = {
   screen: "p1",
-  goal: { label: "Equiparme (laptop, celular)", noun: "laptop" },
   goalAmount: 2000,
   plan: 500,
-  monthlySaving: 100,
-  warda: 0,
-  available: 0,
-  cardProgress: 0,
-  month: 1,
-  remindersOn: false,
 }
 
 type DemoContextValue = {
