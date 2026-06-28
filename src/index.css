@@ -1,0 +1,376 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./fonts.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ------------------------------------------------------------------ */
+/*  BCP design tokens (from Figma variables)                          */
+/*  https://www.figma.com/design/iJKjghdPpOCfC6NIlqTQHX               */
+/*                                                                    */
+/*  Two layers:                                                       */
+/*   1. Raw BCP palette — the full Figma color scales (source of      */
+/*      truth). Exposed as Tailwind utilities (bg-secondary-500,      */
+/*      text-primary-700, bg-onsurface-100, text-state-error…).       */
+/*   2. shadcn semantic tokens — map onto the raw palette so the      */
+/*      component library (bg-primary, text-muted-foreground…) works. */
+/*  NOTE: in Figma "primary" is the BLUE scale and "secondary" is     */
+/*  ORANGE; shadcn's --primary is mapped to the orange brand action.  */
+/* ------------------------------------------------------------------ */
+:root {
+  --radius: 0.5rem; /* 8px – input radius */
+
+  /* ---------- Raw BCP palette (Figma variables) ---------- */
+  --white: #ffffff;
+  --black: #000000;
+  --on-text: #202e44;
+
+  /* State */
+  --state-error: #f8000e;
+  --state-success-dark: #37a500;
+  --state-success: #6ac90f;
+  --state-attention: #3f78bf;
+  --state-attention-light: #f5f8ff;
+  --state-alert: #ffcb1f;
+  --state-alert-light: #fffded;
+
+  /* Primary (blue) */
+  --primary-900: #001f5a;
+  --primary-800: #002473;
+  --primary-700: #002a8d;
+  --primary-600: #002da0;
+  --primary-500: #0030b3;
+  --primary-400: #0a47f0;
+  --primary-300: #3d77ff;
+  --primary-200: #70a9ff;
+  --primary-100: #b2d6ff;
+  --primary-050: #d1e6ff;
+  --primary-040: #ebf4ff;
+
+  /* Secondary (orange — brand) */
+  --secondary-900: #8f1100;
+  --secondary-800: #b02b00;
+  --secondary-700: #ca4500;
+  --secondary-600: #e45e00;
+  --secondary-500: #ff7800;
+  --secondary-400: #ff961f;
+  --secondary-300: #ffa733;
+  --secondary-200: #ffbb5c;
+  --secondary-100: #ffd89f;
+  --secondary-050: #ffe8c7;
+  --secondary-040: #fff6e6;
+
+  /* On-surface (neutrals / text / borders) */
+  --onsurface-900: #4d5b70;
+  --onsurface-800: #606c7f;
+  --onsurface-700: #737e8e;
+  --onsurface-600: #868f9e;
+  --onsurface-500: #99a1ad;
+  --onsurface-400: #acb2bd;
+  --onsurface-300: #bfc4cc;
+  --onsurface-200: #d2d5dc;
+  --onsurface-100: #e5e7eb;
+  --onsurface-050: #eff0f2;
+  --onsurface-040: #f6f6f7;
+
+  /* Background */
+  --background-900: #264b78;
+  --background-800: #3c5d86;
+  --background-700: #527094;
+  --background-600: #6982a3;
+  --background-500: #7f95b1;
+  --background-400: #95a7bf;
+  --background-300: #acbace;
+  --background-200: #c2ccdc;
+  --background-100: #d8dfea;
+  --background-050: #eaeff5;
+  --background-040: #f2f4f8;
+
+  /* Analogous 02 (cyan-blue) */
+  --analogous-02-900: #002c5a;
+  --analogous-02-800: #003873;
+  --analogous-02-700: #00448c;
+  --analogous-02-600: #005aa8;
+  --analogous-02-500: #1672b8;
+  --analogous-02-400: #127dc9;
+  --analogous-02-300: #1f95de;
+  --analogous-02-200: #6fb7e3;
+  --analogous-02-100: #abd9f5;
+  --analogous-02-050: #d2eefc;
+  --analogous-02-040: #e8f6fc;
+
+  /* Analogous 01 (violet) */
+  --analogous-01-900: #220854;
+  --analogous-01-800: #35117a;
+  --analogous-01-700: #451a96;
+  --analogous-01-600: #5625b2;
+  --analogous-01-500: #6d3acd;
+  --analogous-01-400: #7b52c5;
+  --analogous-01-300: #9877d3;
+  --analogous-01-200: #b59ce2;
+  --analogous-01-100: #d2c1f0;
+  --analogous-01-050: #ece4fc;
+  --analogous-01-040: #f4f0fc;
+
+  /* Transparent white */
+  --transparent-white-90: #ffffffe5;
+  --transparent-white-80: #ffffffcc;
+  --transparent-white-70: #ffffffb2;
+  --transparent-white-60: #ffffff99;
+  --transparent-white-50: #ffffff80;
+  --transparent-white-40: #ffffff66;
+  --transparent-white-30: #ffffff4d;
+  --transparent-white-20: #ffffff33;
+  --transparent-white-10: #ffffff1a;
+  --transparent: #ffffff00;
+
+  /* Transparent black */
+  --transparent-black-90: #000000e5;
+  --transparent-black-80: #000000cc;
+  --transparent-black-70: #000000b2;
+  --transparent-black-60: #00000099;
+  --transparent-black-50: #00000080;
+  --transparent-black-40: #00000066;
+  --transparent-black-30: #0000004d;
+  --transparent-black-20: #00000033;
+  --transparent-black-10: #0000001a;
+
+  /* ---------- shadcn semantic tokens (map onto raw palette) ---------- */
+  --background: var(--white);
+  --foreground: var(--on-text);
+
+  --card: var(--white);
+  --card-foreground: var(--on-text);
+  --popover: var(--white);
+  --popover-foreground: var(--on-text);
+
+  --primary: var(--secondary-500); /* orange brand action */
+  --primary-foreground: var(--white);
+
+  --secondary: var(--background-040); /* light gray surface */
+  --secondary-foreground: var(--on-text);
+
+  --muted: var(--background-040);
+  --muted-foreground: var(--onsurface-800);
+
+  --accent: var(--background-040);
+  --accent-foreground: var(--on-text);
+
+  --destructive: var(--state-error);
+  --destructive-foreground: var(--white);
+
+  --border: var(--onsurface-400);
+  --input: var(--onsurface-400);
+  --ring: var(--secondary-500);
+
+  /* App canvas behind the mobile frame */
+  --app: var(--background-040);
+}
+
+/* Expose tokens to Tailwind utilities (bg-primary, text-muted-foreground…) */
+@theme inline {
+  /* shadcn semantic colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-app: var(--app);
+
+  /* Convenience aliases */
+  --color-brand: var(--secondary-500);
+  --color-bcp-blue: var(--primary-700);
+  --color-on-text: var(--on-text);
+  --color-label: var(--onsurface-800);
+
+  /* Raw BCP palette — base */
+  --color-white: var(--white);
+  --color-black: var(--black);
+
+  /* State */
+  --color-state-error: var(--state-error);
+  --color-state-success-dark: var(--state-success-dark);
+  --color-state-success: var(--state-success);
+  --color-state-attention: var(--state-attention);
+  --color-state-attention-light: var(--state-attention-light);
+  --color-state-alert: var(--state-alert);
+  --color-state-alert-light: var(--state-alert-light);
+
+  /* Primary (blue) */
+  --color-primary-900: var(--primary-900);
+  --color-primary-800: var(--primary-800);
+  --color-primary-700: var(--primary-700);
+  --color-primary-600: var(--primary-600);
+  --color-primary-500: var(--primary-500);
+  --color-primary-400: var(--primary-400);
+  --color-primary-300: var(--primary-300);
+  --color-primary-200: var(--primary-200);
+  --color-primary-100: var(--primary-100);
+  --color-primary-050: var(--primary-050);
+  --color-primary-040: var(--primary-040);
+
+  /* Secondary (orange) */
+  --color-secondary-900: var(--secondary-900);
+  --color-secondary-800: var(--secondary-800);
+  --color-secondary-700: var(--secondary-700);
+  --color-secondary-600: var(--secondary-600);
+  --color-secondary-500: var(--secondary-500);
+  --color-secondary-400: var(--secondary-400);
+  --color-secondary-300: var(--secondary-300);
+  --color-secondary-200: var(--secondary-200);
+  --color-secondary-100: var(--secondary-100);
+  --color-secondary-050: var(--secondary-050);
+  --color-secondary-040: var(--secondary-040);
+
+  /* On-surface */
+  --color-onsurface-900: var(--onsurface-900);
+  --color-onsurface-800: var(--onsurface-800);
+  --color-onsurface-700: var(--onsurface-700);
+  --color-onsurface-600: var(--onsurface-600);
+  --color-onsurface-500: var(--onsurface-500);
+  --color-onsurface-400: var(--onsurface-400);
+  --color-onsurface-300: var(--onsurface-300);
+  --color-onsurface-200: var(--onsurface-200);
+  --color-onsurface-100: var(--onsurface-100);
+  --color-onsurface-050: var(--onsurface-050);
+  --color-onsurface-040: var(--onsurface-040);
+
+  /* Background */
+  --color-background-900: var(--background-900);
+  --color-background-800: var(--background-800);
+  --color-background-700: var(--background-700);
+  --color-background-600: var(--background-600);
+  --color-background-500: var(--background-500);
+  --color-background-400: var(--background-400);
+  --color-background-300: var(--background-300);
+  --color-background-200: var(--background-200);
+  --color-background-100: var(--background-100);
+  --color-background-050: var(--background-050);
+  --color-background-040: var(--background-040);
+
+  /* Analogous 02 (cyan-blue) */
+  --color-analogous-02-900: var(--analogous-02-900);
+  --color-analogous-02-800: var(--analogous-02-800);
+  --color-analogous-02-700: var(--analogous-02-700);
+  --color-analogous-02-600: var(--analogous-02-600);
+  --color-analogous-02-500: var(--analogous-02-500);
+  --color-analogous-02-400: var(--analogous-02-400);
+  --color-analogous-02-300: var(--analogous-02-300);
+  --color-analogous-02-200: var(--analogous-02-200);
+  --color-analogous-02-100: var(--analogous-02-100);
+  --color-analogous-02-050: var(--analogous-02-050);
+  --color-analogous-02-040: var(--analogous-02-040);
+
+  /* Analogous 01 (violet) */
+  --color-analogous-01-900: var(--analogous-01-900);
+  --color-analogous-01-800: var(--analogous-01-800);
+  --color-analogous-01-700: var(--analogous-01-700);
+  --color-analogous-01-600: var(--analogous-01-600);
+  --color-analogous-01-500: var(--analogous-01-500);
+  --color-analogous-01-400: var(--analogous-01-400);
+  --color-analogous-01-300: var(--analogous-01-300);
+  --color-analogous-01-200: var(--analogous-01-200);
+  --color-analogous-01-100: var(--analogous-01-100);
+  --color-analogous-01-050: var(--analogous-01-050);
+  --color-analogous-01-040: var(--analogous-01-040);
+
+  /* Transparent white */
+  --color-transparent-white-90: var(--transparent-white-90);
+  --color-transparent-white-80: var(--transparent-white-80);
+  --color-transparent-white-70: var(--transparent-white-70);
+  --color-transparent-white-60: var(--transparent-white-60);
+  --color-transparent-white-50: var(--transparent-white-50);
+  --color-transparent-white-40: var(--transparent-white-40);
+  --color-transparent-white-30: var(--transparent-white-30);
+  --color-transparent-white-20: var(--transparent-white-20);
+  --color-transparent-white-10: var(--transparent-white-10);
+
+  /* Transparent black */
+  --color-transparent-black-90: var(--transparent-black-90);
+  --color-transparent-black-80: var(--transparent-black-80);
+  --color-transparent-black-70: var(--transparent-black-70);
+  --color-transparent-black-60: var(--transparent-black-60);
+  --color-transparent-black-50: var(--transparent-black-50);
+  --color-transparent-black-40: var(--transparent-black-40);
+  --color-transparent-black-30: var(--transparent-black-30);
+  --color-transparent-black-20: var(--transparent-black-20);
+  --color-transparent-black-10: var(--transparent-black-10);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* "Flexo" is BCP's licensed typeface – falls back to a system sans stack */
+  --font-sans: "Flexo", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-app text-foreground font-sans antialiased;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Typography scale (Figma: Flexo)                                    */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .text-h1 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .text-h2 {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .text-h3 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .text-body-1 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+  .text-body-2 {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+  .text-body-3 {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+  .text-interactive-md {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .text-interactive-lg {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+  }
+}
